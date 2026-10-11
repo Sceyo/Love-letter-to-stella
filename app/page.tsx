@@ -1,37 +1,107 @@
 "use client";
 
-import { useState } from "react";
-import FallingElements from "@/components/FallingElements";
-import LoveModal from "@/components/LoveModal";
-import NoButton from "@/components/NoButton";
+import Link from "next/link";
+import PhotoAlbum from "@/components/album/PhotoAlbum";
+import MusicPlayer from "@/components/album/MusicPlayer";
+import { COVER_CONFIG } from "@/components/album/albumConfig";
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-pink-100 via-rose-100 to-pink-200">
-      <FallingElements />
-
-      <div className="relative z-10 flex min-h-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-6 px-4 text-center">
-          <h1 className="text-5xl font-bold text-rose-700 drop-shadow-lg md:text-7xl">
-            Do you still love me?
-          </h1>
-
-          <div className="flex flex-col items-center gap-4">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="h-12 w-40 rounded-full bg-rose-400 text-xl font-semibold text-white transition-all duration-200 hover:scale-110 hover:bg-rose-500 hover:shadow-lg hover:shadow-pink-400"
+    <main
+      className="relative min-h-screen overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(160deg, #fdf4ff 0%, #ede0fa 30%, #f5e6ff 60%, #e8d5f5 100%)",
+      }}
+    >
+      {/* Decorative floating petals / sparkles — fixed overlay */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          overflow: "hidden",
+          zIndex: 0,
+        }}
+      >
+        {(["🌸", "✨", "💜", "💫", "🦋", "⭐", "🌸", "💕"] as const).map(
+          (emoji, i) => (
+            <span
+              key={i}
+              style={{
+                position: "absolute",
+                top: `${10 + i * 11}%`,
+                left: `${5 + i * 12}%`,
+                fontSize: "1.5rem",
+                opacity: 0.18,
+                animation: `pulse ${3 + i * 0.5}s ease-in-out infinite`,
+                animationDelay: `${i * 0.7}s`,
+                userSelect: "none",
+              }}
             >
-              Yes 💖
-            </button>
-
-            <NoButton />
-          </div>
-        </div>
+              {emoji}
+            </span>
+          )
+        )}
       </div>
 
-      <LoveModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Header */}
+      <header
+        className="relative flex flex-col items-center pt-10 pb-2"
+        style={{ zIndex: 10 }}
+      >
+        <h1
+          className="text-3xl font-bold drop-shadow md:text-4xl"
+          style={{ fontFamily: "Dancing Script, cursive", color: "#5b2d8e" }}
+        >
+          {COVER_CONFIG.names}
+        </h1>
+        <p
+          className="mt-1 text-sm tracking-widest uppercase"
+          style={{ color: "#9b6bbf" }}
+        >
+          {COVER_CONFIG.date}
+        </p>
+        <div
+          className="mt-2 h-px w-32"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, #c084fc, transparent)",
+          }}
+        />
+      </header>
+
+      {/* Main album */}
+      <section
+        className="relative flex flex-col items-center justify-center px-4 py-8"
+        style={{ zIndex: 10 }}
+      >
+        <PhotoAlbum />
+      </section>
+
+      {/* Footer */}
+      <footer
+        className="relative flex flex-col items-center gap-2 pb-28 text-center"
+        style={{ zIndex: 10 }}
+      >
+        <p
+          className="text-lg italic"
+          style={{ fontFamily: "Dancing Script, cursive", color: "#7e3aad" }}
+        >
+          Every picture tells our story 💜
+        </p>
+        <Link
+          href="/love"
+          className="mt-1 text-xs underline underline-offset-4 transition-colors"
+          style={{ color: "#b07fd4" }}
+        >
+          💌 A special surprise for you
+        </Link>
+      </footer>
+
+      {/* Spotify-style music player */}
+      <MusicPlayer />
     </main>
   );
 }

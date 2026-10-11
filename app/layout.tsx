@@ -8,8 +8,8 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Do you still love me?",
-  description: "A romantic interactive experience",
+  title: "Our Story 💕",
+  description: "A digital anniversary album",
 };
 
 export default function RootLayout({
