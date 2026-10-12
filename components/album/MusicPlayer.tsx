@@ -256,28 +256,56 @@ export default function MusicPlayer() {
 
       {/* ── Spotify-style bottom bar ── */}
       <div
-        className="fixed bottom-0 left-0 right-0 z-50 flex items-center gap-4 px-4 py-3 md:px-6"
+        className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-3 md:px-6 h-[66px] md:h-[88px] pb-[env(safe-area-inset-bottom,0px)]"
         style={{
           background: "linear-gradient(to bottom, rgba(44,10,70,0.97), rgba(30,5,50,0.99))",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(167,139,250,0.2)",
-          height: "88px",
         }}
       >
+        {/* Mobile top-edge progress scrubber (visible on < md) */}
+        <div className="md:hidden absolute top-0 left-0 right-0 h-1 bg-white/15 cursor-pointer">
+          <div
+            className="h-full rounded-r-full"
+            style={{
+              width: `${progress}%`,
+              background: "linear-gradient(to right, #a855f7, #c084fc)",
+              boxShadow: "0 0 6px rgba(192,132,252,0.8)",
+            }}
+          />
+          <input
+            type="range"
+            min="0"
+            max={duration || 100}
+            step="0.1"
+            value={currentTime}
+            onChange={(e) => {
+              const val = parseFloat(e.target.value);
+              const audio = audioRef.current;
+              if (audio && duration) {
+                audio.currentTime = val;
+                setCurrentTime(val);
+                setProgress((val / duration) * 100);
+              }
+            }}
+            className="absolute -top-2 left-0 h-5 w-full cursor-pointer opacity-0 z-30"
+            aria-label="Seek track"
+          />
+        </div>
 
         {/* ── LEFT: Song info ── */}
-        <div className="flex min-w-0 flex-1 items-center gap-3 md:basis-1/3">
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 md:basis-1/3 mr-2 md:mr-0">
           {/* Album art */}
           <div
-            className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-lg shadow-lg"
+            className="relative flex h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 flex-shrink-0 items-center justify-center rounded-lg shadow-lg"
             style={{
               background: "linear-gradient(135deg, #5b2d8e, #7c3aed)",
-              boxShadow: isPlaying ? "0 0 18px rgba(124,58,237,0.6)" : "0 4px 12px rgba(0,0,0,0.5)",
+              boxShadow: isPlaying ? "0 0 16px rgba(124,58,237,0.6)" : "0 4px 10px rgba(0,0,0,0.5)",
               transition: "box-shadow 0.4s ease",
             }}
           >
             <span
-              className={`text-2xl ${isPlaying ? "animate-pulse" : ""}`}
+              className={`text-lg sm:text-xl md:text-2xl ${isPlaying ? "animate-pulse" : ""}`}
               style={{ animationDuration: "1.5s" }}
             >
               🎵
@@ -295,21 +323,24 @@ export default function MusicPlayer() {
           </div>
 
           {/* Title + Artist */}
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p
-              className="truncate text-sm font-semibold"
+              className="truncate text-xs sm:text-sm font-semibold"
               style={{ color: "#e9d5ff" }}
             >
               {currentSong.title}
             </p>
-            <p className="truncate text-xs" style={{ color: "#a78bfa" }}>
+            <p className="truncate text-[11px] sm:text-xs" style={{ color: "#a78bfa" }}>
               {currentSong.artist}
+              <span className="md:hidden text-purple-200/60 font-mono text-[10px]">
+                {" "}• {formatTime(currentTime)}
+              </span>
             </p>
           </div>
 
           {/* Heart / like button with roulette colors and pop */}
           <button
-            className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-transform hover:scale-125 active:scale-95 ${
+            className={`flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-full transition-transform hover:scale-125 active:scale-95 ${
               isHeartPopping ? "heart-pop" : ""
             }`}
             style={{
@@ -320,7 +351,7 @@ export default function MusicPlayer() {
             onClick={handleHeartClick}
           >
             <svg
-              className="h-5 w-5 transition-colors duration-200"
+              className="h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200"
               viewBox="0 0 24 24"
               fill={currentHeart.fill}
               stroke={currentHeart.stroke}
@@ -331,14 +362,14 @@ export default function MusicPlayer() {
           </button>
         </div>
 
-        {/* ── CENTER: Controls + progress ── */}
-        <div className="flex flex-1 flex-col items-center gap-1.5 md:basis-1/3">
+        {/* ── CENTER: Controls + progress (desktop: center column; mobile: right aligned controls) ── */}
+        <div className="flex flex-shrink-0 md:flex-1 md:flex-col items-center gap-1 sm:gap-2 md:gap-1.5 md:basis-1/3">
           {/* Control buttons */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* Shuffle — highlights brightly when active */}
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+            {/* Shuffle */}
             <button
               onClick={() => setIsShuffled((s) => !s)}
-              className="relative flex h-8 w-8 items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
+              className="relative flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
               style={{
                 color: isShuffled ? "#c084fc" : "#7c6a9e",
                 background: isShuffled ? "rgba(192, 132, 252, 0.18)" : "transparent",
@@ -348,7 +379,7 @@ export default function MusicPlayer() {
               title={isShuffled ? "Shuffle: On (Active)" : "Shuffle: Off"}
             >
               <svg
-                className="h-4 w-4 transition-colors"
+                className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -366,21 +397,21 @@ export default function MusicPlayer() {
             {/* Prev */}
             <button
               onClick={playPrev}
-              className="text-xl transition-all hover:scale-110 active:scale-95"
+              className="p-1 text-base sm:text-lg md:text-xl transition-all hover:scale-110 active:scale-95"
               style={{ color: "#c4b5fd" }}
               aria-label="Previous"
             >
               ⏮
             </button>
 
-            {/* Play / Pause — big button */}
+            {/* Play / Pause */}
             <button
               onClick={() => { setHasInteracted(true); setIsPlaying((p) => !p); }}
-              className="flex h-10 w-10 items-center justify-center rounded-full font-bold text-white shadow-lg transition-all hover:scale-110 active:scale-95"
+              className="flex h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 items-center justify-center rounded-full font-bold text-white shadow-lg transition-all hover:scale-110 active:scale-95"
               style={{
                 background: "linear-gradient(135deg, #a855f7, #7c3aed)",
                 boxShadow: "0 4px 14px rgba(124,58,237,0.5)",
-                fontSize: "1.1rem",
+                fontSize: "0.95rem",
               }}
               aria-label={isPlaying ? "Pause" : "Play"}
             >
@@ -390,17 +421,17 @@ export default function MusicPlayer() {
             {/* Next */}
             <button
               onClick={playNext}
-              className="text-xl transition-all hover:scale-110 active:scale-95"
+              className="p-1 text-base sm:text-lg md:text-xl transition-all hover:scale-110 active:scale-95"
               style={{ color: "#c4b5fd" }}
               aria-label="Next"
             >
               ⏭
             </button>
 
-            {/* Repeat — highlights brightly when active with 1-badge for Repeat One */}
+            {/* Repeat */}
             <button
               onClick={cycleRepeat}
-              className="relative flex h-8 w-8 items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
+              className="relative flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
               style={{
                 color: repeatMode !== "off" ? "#c084fc" : "#7c6a9e",
                 background: repeatMode !== "off" ? "rgba(192, 132, 252, 0.18)" : "transparent",
@@ -410,7 +441,7 @@ export default function MusicPlayer() {
               title={repeatMode === "off" ? "Repeat: Off" : repeatMode === "all" ? "Repeat: All (Active)" : "Repeat: One (Active)"}
             >
               <svg
-                className="h-4 w-4 transition-colors"
+                className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -437,8 +468,8 @@ export default function MusicPlayer() {
             </button>
           </div>
 
-          {/* Progress bar */}
-          <div className="flex w-full max-w-sm items-center gap-2">
+          {/* Desktop Progress bar (hidden on mobile, mobile uses top-edge scrubber) */}
+          <div className="hidden md:flex w-full max-w-sm items-center gap-2">
             <span
               className="w-9 text-right text-xs tabular-nums select-none"
               style={{
@@ -498,7 +529,7 @@ export default function MusicPlayer() {
           </div>
         </div>
 
-        {/* ── RIGHT: Volume ── */}
+        {/* ── RIGHT: Volume (Desktop only) ── */}
         <div className="hidden flex-1 items-center justify-end gap-2.5 md:flex md:basis-1/3">
           {/* Playlist track indicator */}
           {PLAYLIST.length > 1 && (
@@ -559,19 +590,6 @@ export default function MusicPlayer() {
             />
           </div>
         </div>
-
-        {/* ── Mobile: volume mute only ── */}
-        <div className="flex flex-shrink-0 items-center md:hidden">
-          <button
-            onClick={toggleMute}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-base transition-colors hover:text-white"
-            style={{ color: "#c4b5fd" }}
-            aria-label={isMuted || effectiveVolume === 0 ? "Unmute" : "Mute"}
-          >
-            {renderVolumeIcon()}
-          </button>
-        </div>
-
       </div>
 
       {/* ── Flurry of Hearts Overlay ── */}

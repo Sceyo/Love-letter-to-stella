@@ -59,8 +59,8 @@ function AlbumCover({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "12px",
-          padding: "24px",
+          gap: "clamp(6px, 1.8vw, 12px)",
+          padding: "clamp(12px, 3.5vw, 24px)",
           textAlign: "center",
         }}
       >
@@ -68,8 +68,8 @@ function AlbumCover({
         <div
           style={{
             position: "relative",
-            width: "clamp(115px, 32vw, 140px)",
-            height: "clamp(115px, 32vw, 140px)",
+            width: "clamp(95px, 26vw, 140px)",
+            height: "clamp(95px, 26vw, 140px)",
             borderRadius: "50%",
             overflow: "hidden",
             boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
@@ -82,7 +82,7 @@ function AlbumCover({
           }}
         >
           {showEmoji ? (
-            <span style={{ fontSize: "3rem" }}>💜</span>
+            <span style={{ fontSize: "clamp(2rem, 6vw, 3rem)" }}>💜</span>
           ) : (
             <Image
               src={COVER_CONFIG.coverImage}
@@ -98,7 +98,7 @@ function AlbumCover({
         <h2
           style={{
             fontFamily: "Dancing Script, cursive",
-            fontSize: "clamp(1.25rem, 4.5vw, 1.65rem)",
+            fontSize: "clamp(1.15rem, 4vw, 1.65rem)",
             fontWeight: "bold",
             color: "#e9d5ff",
             lineHeight: 1.25,
@@ -112,7 +112,7 @@ function AlbumCover({
         </h2>
         <p
           style={{
-            fontSize: "clamp(0.85rem, 3vw, 1rem)",
+            fontSize: "clamp(0.8rem, 2.5vw, 1rem)",
             color: "rgba(233,213,255,0.9)",
             letterSpacing: "0.02em",
           }}
@@ -121,7 +121,7 @@ function AlbumCover({
         </p>
         <p
           style={{
-            fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)",
+            fontSize: "clamp(0.7rem, 2vw, 0.85rem)",
             color: "rgba(233,213,255,0.7)",
             letterSpacing: "0.05em",
           }}
@@ -158,30 +158,30 @@ function PhotoPage({ page }: { page: AlbumPage }) {
       <div className="relative flex-1 bg-stone-100">
         {showNote && page.story ? (
           <div
-            className="flex h-full w-full flex-col justify-between p-5 text-center overflow-y-auto"
+            className="flex h-full w-full flex-col justify-between p-3.5 sm:p-5 text-center overflow-y-auto"
             style={{
               background: "linear-gradient(135deg, #fdfaf6 0%, #f7f1e6 100%)",
             }}
           >
-            <div className="flex items-center justify-between text-xs border-b border-purple-200/50 pb-2">
-              <span className="font-semibold text-purple-700">✍️ Memory Note</span>
+            <div className="flex items-center justify-between text-xs border-b border-purple-200/50 pb-1.5 sm:pb-2">
+              <span className="text-[11px] sm:text-xs font-semibold text-purple-700">✍️ Memory Note</span>
               {page.date && (
-                <span className="rounded-full bg-purple-100/70 px-2 py-0.5 text-purple-800">
+                <span className="rounded-full bg-purple-100/70 px-2 py-0.5 text-[10px] sm:text-xs text-purple-800">
                   {page.date}
                 </span>
               )}
             </div>
             <p
-              className="my-auto text-base sm:text-lg leading-relaxed"
+              className="my-auto text-xs sm:text-lg leading-relaxed py-1"
               style={{
                 fontFamily: "Dancing Script, cursive",
                 color: "#4a154b",
-                lineHeight: "1.65",
+                lineHeight: "1.6",
               }}
             >
               &ldquo;{page.story}&rdquo;
             </p>
-            <span className="text-xs italic text-purple-400 border-t border-purple-200/40 pt-2">
+            <span className="text-[10px] sm:text-xs italic text-purple-400 border-t border-purple-200/40 pt-1.5 sm:pt-2">
               Always with you 💕
             </span>
           </div>
@@ -219,15 +219,15 @@ function PhotoPage({ page }: { page: AlbumPage }) {
 
       {/* Caption strip */}
       <div
-        className="flex flex-col items-center justify-center gap-1 px-4 py-2.5 text-center"
+        className="flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 sm:gap-1 sm:px-4 sm:py-2.5 text-center flex-shrink-0"
         style={{
           background: "linear-gradient(to bottom, #fdf4ff, #f3e8ff)",
           borderTop: "1px solid rgba(167,139,250,0.25)",
         }}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {page.date && (
-            <span className="text-xs font-medium tracking-widest uppercase" style={{ color: "#9b6bbf" }}>
+            <span className="text-[10px] sm:text-xs font-medium tracking-widest uppercase truncate max-w-[120px]" style={{ color: "#9b6bbf" }}>
               {page.date}
             </span>
           )}
@@ -237,7 +237,7 @@ function PhotoPage({ page }: { page: AlbumPage }) {
                 e.stopPropagation();
                 setShowNote((s) => !s);
               }}
-              className="rounded-full px-2 py-0.5 text-[10px] font-semibold transition-all hover:scale-105"
+              className="rounded-full px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold transition-all hover:scale-105"
               style={{
                 background: showNote ? "#7c3aed" : "rgba(168,85,247,0.18)",
                 color: showNote ? "#ffffff" : "#6d28d9",
@@ -249,7 +249,7 @@ function PhotoPage({ page }: { page: AlbumPage }) {
           )}
         </div>
         <p
-          className="text-base italic"
+          className="text-xs sm:text-base italic line-clamp-2"
           style={{ fontFamily: "Dancing Script, cursive", color: "#5b2d8e" }}
         >
           {page.caption}
@@ -281,7 +281,7 @@ function StoryPage({
 
   return (
     <div
-      className="relative flex h-full flex-col justify-between overflow-hidden p-6 select-none sm:p-7"
+      className="relative flex h-full flex-col justify-between overflow-hidden p-3 select-none sm:p-7"
       style={{
         background: "linear-gradient(145deg, #fdfbf7 0%, #f6efe4 100%)",
         borderRadius: "4px 0 0 4px",
@@ -290,7 +290,7 @@ function StoryPage({
     >
       {/* Decorative vintage washi tape in top right */}
       <div
-        className="absolute top-3 right-3 h-3.5 w-14 -rotate-12 rounded-sm shadow-sm pointer-events-none"
+        className="absolute top-2 right-2 h-2.5 w-10 -rotate-12 rounded-sm shadow-sm pointer-events-none opacity-40 sm:top-3 sm:right-3 sm:h-3.5 sm:w-14 sm:opacity-90"
         style={{
           background: "rgba(192, 132, 252, 0.4)",
           backdropFilter: "blur(2px)",
@@ -308,11 +308,11 @@ function StoryPage({
       />
 
       {/* Top Header: Memory note indicator & Date */}
-      <div className="relative z-10 flex items-center justify-between border-b border-purple-200/60 pb-2.5">
-        <div className="flex items-center gap-1.5">
-          <span className="text-sm">✍️</span>
+      <div className="relative z-10 flex items-center justify-between gap-1 border-b border-purple-200/60 pb-1.5 sm:pb-2.5">
+        <div className="flex items-center gap-1 min-w-0">
+          <span className="text-xs sm:text-sm">✍️</span>
           <span
-            className="text-xs font-semibold tracking-wider uppercase"
+            className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate"
             style={{ color: "#7c3aed" }}
           >
             A Little Note
@@ -320,7 +320,7 @@ function StoryPage({
         </div>
         {page.date && (
           <span
-            className="rounded-full px-2.5 py-0.5 text-[11px] font-medium"
+            className="rounded-full px-2 py-0.5 text-[9px] sm:text-[11px] font-medium truncate max-w-[50%]"
             style={{
               background: "rgba(192, 132, 252, 0.2)",
               color: "#6b21a8",
@@ -332,39 +332,39 @@ function StoryPage({
       </div>
 
       {/* Center handwritten text */}
-      <div className="relative z-10 my-auto flex flex-col items-center justify-center px-2 py-3 text-center">
+      <div className="relative z-10 my-auto flex flex-col items-center justify-center px-1 py-1 sm:px-2 sm:py-3 text-center overflow-y-auto max-h-full">
         <p
-          className="text-base leading-relaxed sm:text-lg"
+          className="text-xs sm:text-lg leading-relaxed"
           style={{
             fontFamily: "Dancing Script, cursive",
             color: "#4a154b",
-            lineHeight: "1.65",
+            lineHeight: "1.6",
             textShadow: "0 1px 2px rgba(255,255,255,0.7)",
           }}
         >
           &ldquo;{storyText}&rdquo;
         </p>
         <div
-          className="mt-3.5 h-px w-20"
+          className="mt-2 sm:mt-3.5 h-px w-16 sm:w-20"
           style={{
             background:
               "linear-gradient(to right, transparent, #c084fc, transparent)",
           }}
         />
-        <span className="mt-2 text-xs italic text-purple-400">
+        <span className="mt-1 sm:mt-2 text-[10px] sm:text-xs italic text-purple-400">
           {page.caption}
         </span>
       </div>
 
       {/* Bottom signature & page indicator */}
-      <div className="relative z-10 flex items-center justify-between pt-2.5 text-xs border-t border-purple-200/50">
+      <div className="relative z-10 flex items-center justify-between pt-1.5 sm:pt-2.5 text-xs border-t border-purple-200/50">
         <span
-          className="text-sm font-bold text-purple-600"
+          className="text-xs sm:text-sm font-bold text-purple-600 truncate"
           style={{ fontFamily: "Dancing Script, cursive" }}
         >
           Always with you 💕
         </span>
-        <span className="text-[11px] text-purple-400">
+        <span className="text-[10px] sm:text-[11px] text-purple-400 flex-shrink-0">
           Memory #{pageNumber}
         </span>
       </div>
@@ -417,7 +417,7 @@ function FinalPage({
 
   return (
     <div
-      className="relative flex h-full flex-col justify-between overflow-hidden p-6 select-none sm:p-7 text-center"
+      className="relative flex h-full flex-col justify-between overflow-hidden p-3.5 select-none sm:p-7 text-center"
       style={{
         background: "linear-gradient(135deg, #fdfaf6 0%, #f5eefb 50%, #ede9fe 100%)",
         borderRadius: "0 4px 4px 0",
@@ -425,7 +425,7 @@ function FinalPage({
     >
       {/* Decorative subtle corner border */}
       <div
-        className="pointer-events-none absolute inset-3 rounded"
+        className="pointer-events-none absolute inset-2.5 sm:inset-3 rounded"
         style={{
           border: "1.5px solid rgba(192, 132, 252, 0.35)",
         }}
@@ -440,13 +440,13 @@ function FinalPage({
       />
 
       {/* Top Header */}
-      <div className="relative z-10 flex items-center justify-between border-b border-purple-200/50 pb-2.5">
-        <span className="text-xs font-semibold tracking-widest uppercase text-purple-600">
+      <div className="relative z-10 flex items-center justify-between border-b border-purple-200/50 pb-1.5 sm:pb-2.5">
+        <span className="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-purple-600">
           {badge}
         </span>
         {date && (
           <span
-            className="rounded-full px-2.5 py-0.5 text-[11px] font-medium"
+            className="rounded-full px-2 py-0.5 text-[9px] sm:text-[11px] font-medium"
             style={{
               background: "rgba(192, 132, 252, 0.2)",
               color: "#6b21a8",
@@ -458,8 +458,8 @@ function FinalPage({
       </div>
 
       {/* Center Romantic Message */}
-      <div className="relative z-10 my-auto flex flex-col items-center justify-center px-2 py-3">
-        <div className="relative mb-2 flex flex-col items-center">
+      <div className="relative z-10 my-auto flex flex-col items-center justify-center px-1 py-1.5 sm:px-2 sm:py-3 overflow-y-auto max-h-full">
+        <div className="relative mb-1 sm:mb-2 flex flex-col items-center">
           {/* Shockwave ring on explode */}
           {showShockwave && <div className="heart-shockwave" />}
 
@@ -472,7 +472,7 @@ function FinalPage({
               const originY = rect.top + rect.height / 2;
               onHeartExplode(originX, originY);
             }}
-            className={`group relative text-4xl select-none transition-transform cursor-pointer focus:outline-none ${
+            className={`group relative text-3xl sm:text-4xl select-none transition-transform cursor-pointer focus:outline-none ${
               isHeartExploding
                 ? "heart-exploding"
                 : "heart-beat-idle hover:scale-125 active:scale-95"
@@ -488,7 +488,7 @@ function FinalPage({
 
           {/* Interactive invitation badge */}
           <span
-            className="mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium tracking-wide text-purple-600 transition-opacity"
+            className="mt-0.5 sm:mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] sm:text-[10px] font-medium tracking-wide text-purple-600 transition-opacity"
             style={{
               background: "rgba(192, 132, 252, 0.2)",
               animation: "pulse 2s ease-in-out infinite",
@@ -498,7 +498,7 @@ function FinalPage({
           </span>
         </div>
         <h3
-          className="text-xl sm:text-2xl font-bold"
+          className="text-lg sm:text-2xl font-bold"
           style={{
             fontFamily: "Dancing Script, cursive",
             color: "#4a154b",
@@ -507,18 +507,18 @@ function FinalPage({
           {title}
         </h3>
         <p
-          className="mt-3 text-sm sm:text-base leading-relaxed text-purple-900/80 max-w-[280px]"
+          className="mt-1.5 sm:mt-3 text-xs sm:text-base leading-relaxed text-purple-900/80 max-w-[280px]"
           style={{
             fontFamily: "Dancing Script, cursive",
-            fontSize: "clamp(1rem, 3vw, 1.2rem)",
-            lineHeight: "1.6",
+            fontSize: "clamp(0.85rem, 2.5vw, 1.2rem)",
+            lineHeight: "1.55",
           }}
         >
           {message}
         </p>
 
         <div
-          className="mt-3 h-px w-24"
+          className="mt-2 sm:mt-3 h-px w-20 sm:w-24"
           style={{
             background: "linear-gradient(to right, transparent, #c084fc, transparent)",
           }}
@@ -526,7 +526,7 @@ function FinalPage({
 
         {signature && (
           <p
-            className="mt-2 text-xs font-semibold tracking-wide"
+            className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs font-semibold tracking-wide"
             style={{ color: "#7c3aed" }}
           >
             {signature}
@@ -535,10 +535,10 @@ function FinalPage({
       </div>
 
       {/* Bottom Action: Close Album Button */}
-      <div className="relative z-10 flex flex-col items-center gap-2 border-t border-purple-200/50 pt-3">
+      <div className="relative z-10 flex flex-col items-center gap-1 sm:gap-2 border-t border-purple-200/50 pt-2 sm:pt-3">
         <button
           onClick={onBackToCover}
-          className="group flex items-center gap-2 rounded-full px-5 py-2 text-xs font-semibold text-white shadow-md transition-all hover:scale-105 active:scale-95"
+          className="group flex items-center gap-1.5 sm:gap-2 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs font-semibold text-white shadow-md transition-all hover:scale-105 active:scale-95"
           style={{
             background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
             boxShadow: "0 4px 14px rgba(109, 40, 217, 0.35)",
@@ -547,7 +547,7 @@ function FinalPage({
           <span>📕</span>
           <span>{buttonText}</span>
         </button>
-        <span className="text-[10px] text-purple-400">
+        <span className="text-[9px] sm:text-[10px] text-purple-400">
           or flip ‹ to re-read our memories
         </span>
       </div>
@@ -581,7 +581,7 @@ function NavButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className="flex h-12 w-12 items-center justify-center rounded-full bg-white/80 text-xl shadow-lg backdrop-blur transition-all hover:scale-110 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"
+      className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/80 text-lg sm:text-xl shadow-lg backdrop-blur transition-all hover:scale-110 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"
       style={{ color: "#6d28d9" }}
       aria-label={title || (direction === "prev" ? "Previous page" : "Next page")}
       title={title}
@@ -756,8 +756,8 @@ export default function PhotoAlbum() {
       <div
         className="album-book relative"
         style={{
-          width: isOpen ? "min(90vw, 720px)" : "min(90vw, 340px)",
-          height: "min(75vw, 520px)",
+          width: isOpen ? "clamp(330px, 95vw, 760px)" : "clamp(280px, 86vw, 360px)",
+          height: "clamp(385px, 115vw, 530px)",
           perspective: "2200px",
           transition: "width 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
@@ -979,7 +979,7 @@ export default function PhotoAlbum() {
 
       {/* ── Navigation ── */}
       {isOpen && (
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <NavButton
             direction="prev"
             onClick={() => flip("prev")}
@@ -987,7 +987,7 @@ export default function PhotoAlbum() {
             title={pageIndex <= 0 ? "Close album" : "Previous page"}
           />
           <span
-            className="min-w-[90px] text-center text-sm font-medium"
+            className="min-w-[80px] sm:min-w-[90px] text-center text-xs sm:text-sm font-medium"
             style={{ color: "rgba(109,40,217,0.85)" }}
           >
             {pageIndex < totalPages ? `${pageIndex + 1} / ${totalPages}` : "Finale 💕"}
@@ -1004,7 +1004,7 @@ export default function PhotoAlbum() {
 
       {/* ── Page hint dots ── */}
       {isOpen && totalPages > 1 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-center max-w-[94vw] gap-1 sm:gap-1.5 px-2">
           {ALBUM_PAGES.map((_, i) => (
             <button
               key={i}
@@ -1018,7 +1018,7 @@ export default function PhotoAlbum() {
                   }, 400);
                 }
               }}
-              className="h-2 w-2 rounded-full transition-all"
+              className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full transition-all"
               style={{
                 background: i === pageIndex ? "#6d28d9" : "#c4b5fd",
                 transform: i === pageIndex ? "scale(1.4)" : "scale(1)",
@@ -1038,7 +1038,7 @@ export default function PhotoAlbum() {
                 }, 400);
               }
             }}
-            className="flex items-center justify-center text-xs transition-all hover:scale-125 ml-0.5"
+            className="flex items-center justify-center text-[10px] sm:text-xs transition-all hover:scale-125 ml-0.5"
             style={{
               opacity: pageIndex === totalPages ? 1 : 0.45,
               transform: pageIndex === totalPages ? "scale(1.3)" : "scale(1)",

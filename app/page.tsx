@@ -48,23 +48,23 @@ export default function Home() {
 
       {/* Header */}
       <header
-        className="relative flex flex-col items-center pt-10 pb-2"
+        className="relative flex flex-col items-center pt-4 pb-1 sm:pt-10 sm:pb-2"
         style={{ zIndex: 10 }}
       >
         <h1
-          className="text-3xl font-bold drop-shadow md:text-4xl"
+          className="text-2xl font-bold drop-shadow sm:text-3xl md:text-4xl"
           style={{ fontFamily: "Dancing Script, cursive", color: "#5b2d8e" }}
         >
           {COVER_CONFIG.names}
         </h1>
         <p
-          className="mt-1 text-sm tracking-widest uppercase"
+          className="mt-0.5 text-xs tracking-widest uppercase sm:mt-1 sm:text-sm"
           style={{ color: "#9b6bbf" }}
         >
           {COVER_CONFIG.date}
         </p>
         <div
-          className="mt-2 h-px w-32"
+          className="mt-1.5 h-px w-24 sm:mt-2 sm:w-32"
           style={{
             background:
               "linear-gradient(to right, transparent, #c084fc, transparent)",
@@ -74,7 +74,7 @@ export default function Home() {
 
       {/* Main album */}
       <section
-        className="relative flex flex-col items-center justify-center px-4 py-8"
+        className="relative flex flex-col items-center justify-center px-1.5 py-2 sm:px-4 sm:py-8"
         style={{ zIndex: 10 }}
       >
         <PhotoAlbum />
@@ -82,7 +82,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer
-        className="relative flex flex-col items-center gap-2 pb-28 text-center"
+        className="relative flex flex-col items-center gap-1.5 pb-20 sm:pb-28 text-center"
         style={{ zIndex: 10 }}
       >
         <p
